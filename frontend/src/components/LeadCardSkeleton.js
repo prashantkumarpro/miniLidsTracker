@@ -4,7 +4,7 @@ import React from 'react';
 
 const LeadCardSkeleton = () => {
   return (
-    <div className="min-w-[280px] sm:min-w-[330px] lg:min-w-[360px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 lg:p-6 shadow-xs relative overflow-hidden animate-pulse flex flex-col justify-between h-full select-none">
+    <div className="min-w-[280px] sm:min-w-[330px] lg:min-w-[360px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 lg:p-6 shadow-xs relative overflow-hidden animate-pulse flex flex-col justify-between min-h-[260px] select-none">
       {/* Top Border Accent placeholder */}
       <div className="absolute top-0 left-0 w-full h-[3px] bg-gray-200/30 dark:bg-gray-800/30" />
       

@@ -81,7 +81,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
   const lastNote = notes.length > 0 ? notes[notes.length - 1] : null;
 
   return (
-    <div className="min-w-[280px] sm:min-w-[330px] lg:min-w-[360px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 lg:p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
+    <div className="min-w-[280px] sm:min-w-[330px] lg:min-w-[360px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 lg:p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[260px] relative group overflow-hidden">
       
       {/* Top Border Accent Indicator */}
       <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${getStatusGradient(status)} rounded-t-2xl opacity-20 group-hover:opacity-100 transition-opacity duration-300`} />
