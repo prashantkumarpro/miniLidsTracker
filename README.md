@@ -1,89 +1,43 @@
-# Mini Leads Tracker - Full Stack MERN CRM System
+# Mini Leads Tracker
 
-A production-ready CRM-style Lead Management System designed for sales representatives to track, manage, search, filter, and document customer interaction history.
+A Full Stack Lead Management CRM application built as part of the **FasterQ Full Stack Developer Internship Assignment**.
 
----
-
-## 🚀 Project Overview
-
-**Mini Leads Tracker** is a streamlined, premium CRM application built using the MERN stack (Next.js, Express, MongoDB, Node.js). The app allows sales reps to log in securely, view an administrative pipeline dashboard, review total and status-based statistics, create and edit leads, search/filter lead databases, and log communication notes under individual customer timelines.
-
-This application is built using clean, modular architecture, features centralized server-side validations and error handling, and utilizes responsive, modern SaaS design aesthetics using pure Tailwind CSS.
-
----
-
-## ✨ Features
-
-- **JWT Authentication**: Secure login flow using custom middleware, with token persistence in `localStorage`.
-- **Pipeline Statistics Dashboard**: Instant count cards detailing Total Leads, New, Contacted, Interested, Converted, and Lost.
-- **Lead CRUD Operations**: Create, read, update, and delete lead files with confirmation safety dialogs.
-- **Search & Filtering**: Real-time debounce searching (by name and phone) and status filter chips.
-- **Activity & Note History**: Sub-document note timeline for logged customer follow-ups and activity feeds.
-- **Centralized Validation**: Robust input constraint checkers (min/max lengths, exact 10-digit phone regex) mapping to meaningful error blocks.
-- **Centralized Error Handling**: Standardized success/error JSON formats across all endpoint routers.
-- **Responsive SaaS Design**: Elegant interface (orange accent, clean cards, soft shadows) adapting to Desktop, Tablet, and Mobile.
+The application allows sales representatives to manage customer leads, update lead status, search and filter leads, maintain notes history, and securely access the system using JWT Authentication.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: Tailwind CSS v4
-- **Language**: JavaScript (CommonJS/ES6, NO TypeScript)
-- **HTTP Clients**: Native Fetch API (NO Axios)
-- **Authentication**: JWT stored in `localStorage`
+* **Next.js** (App Router & Client SSR)
+* **JavaScript** (ES6+)
+* **Tailwind CSS** (V4 Utility Engine)
+* **Fetch API** (Centralized API layers)
 
 ### Backend
-- **Platform**: Node.js & Express.js
-- **Database**: MongoDB & Mongoose
-- **Security**: JWT (`jsonwebtoken`) & `bcryptjs`
-- **Request Validator**: `express-validator`
+* **Node.js** (Server runtime)
+* **Express.js** (REST API framework)
+* **MongoDB & Mongoose** (NoSQL Database & Object Modeling)
+* **JWT Authentication** (Secure token-based auth)
+* **bcryptjs** (Salted password hashing)
+* **express-validator** (Server-side schema validation sanitizers)
 
 ---
 
-## 📁 Folder Structure
+## ✨ Features Implemented
 
-```text
-miniLidsTracker/
-├── backend/
-│   ├── src/
-│   │   ├── config/          # Database configuration (db.js)
-│   │   ├── constants/       # Allowed lead statuses (leadStatus.js)
-│   │   ├── controllers/     # Controller logic (auth & lead controllers)
-│   │   ├── middlewares/     # JWT authentication & validator formatting
-│   │   ├── models/          # Mongoose Schemas (User & Lead)
-│   │   ├── routes/          # Express route bindings (auth & lead routes)
-│   │   ├── validators/      # Validation check schemas
-│   │   ├── utils/           # ApiResponse & asyncHandler wrappers
-│   │   └── tests/           # Integration API test suite (api.test.js)
-│   ├── .env                 # Local environment config (git-ignored)
-│   ├── .env.example         # Template for environment variables
-│   ├── .gitignore           # Git ignore file for backend files
-│   ├── package.json         # Backend dependencies & npm run script bindings
-│   ├── app.js               # Express application initializations
-│   └── server.js            # Server connection, seeding, and binding
-│
-├── frontend/
-│   ├── src/
-│   │   ├── app/             # App router pages (login, dashboard, lead details)
-│   │   │   ├── leads/       # Leads pages
-│   │   │   │   └── [id]/    # Dynamic Lead details view
-│   │   │   │       └── page.js
-│   │   │   ├── login/       # Login page view (page.js)
-│   │   │   ├── globals.css  # Tailwind configurations
-│   │   │   ├── layout.js    # Base HTML template and providers wrapper
-│   │   │   └── page.js      # Main CRM Dashboard Page
-│   │   ├── components/      # Reusable visual components (Navbar, Cards, Modals)
-│   │   ├── context/         # AuthContext authentication hooks
-│   │   └── utils/           # Fetch wrapper and authorization handlers
-│   ├── .env                 # Local environment config (git-ignored)
-│   ├── .env.example         # Template for environment variables
-│   ├── .gitignore           # Git ignore file for frontend files
-│   └── package.json         # Frontend dependencies & Next.js build runners
-│
-└── .gitignore               # Workspace-level git ignore rules
-```
+* **Secure JWT Authentication**: Protected backend routes and client-side page route redirects based on token verification.
+* **Full CRUD Operations**: Create, Read, Update, and Delete customer leads in real-time.
+* **Search & Filter Command Bar**: Search leads by Name or Phone with keyboard shortcut listeners (`Ctrl + K` or `Cmd + K` focuses search).
+* **Interactive Pipeline Chips**: Filter leads by status state with dynamic counts reflecting the active quantity inside each stage chip.
+* **Communication Logs Timeline**: Maintain note history logs linked to lead status changes in a visual vertical path.
+* **Responsive Carousel Metrics**: Horizontal swiping stats panels displaying lead distribution counts and animated ratio bars.
+* **Horizontal Swipe Lead Cards Carousel**: Native mobile swiping and desktop Arrow Button slide navigation controllers on hover.
+* **Infinite Scroll Pagination**: Swiping/scrolling near the end of the carousel triggers dynamic page fetches, appending new leads in real-time.
+* **Loading Skeletons**: Hand-crafted animating skeletons (`StatsCardSkeleton` and `LeadCardSkeleton`) to ensure a smooth transition state before initial data builds.
+* **Lazy Loading Performance**: Next.js code-splitting (`next/dynamic`) for modal components reduces bundle weights, improving initial First Contentful Paint (FCP).
+* **Database Isolation Security**: Redirected tests to an isolated test collection (`mini-leads-tracker-test`), protecting active development records during test execution.
+* **Clean Code Architecture**: Separated MVC controllers, models, schema validation layers, and modular reusable components.
 
 ---
 
@@ -91,397 +45,75 @@ miniLidsTracker/
 
 ### Backend (`backend/.env`)
 Create a `.env` file in the `backend/` directory using the template below:
-```ini
+```env
 PORT=5000
-MONGODB_URI=mongodb://127.0.0.1:27017/dataDock
-JWT_SECRET=your_jwt_secret_key_here
-CORS_ORIGIN=http://localhost:3000
+MONGODB_URI=your_mongodb_connection_string
+MONGODB_URI_TEST=your_mongodb_test_connection_string
+JWT_SECRET=your_jwt_secret_key
 NODE_ENV=development
+CORS_ORIGIN=http://localhost:3000
 ```
 
 ### Frontend (`frontend/.env`)
 Create a `.env` file in the `frontend/` directory using the template below:
-```ini
+```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
 ```
 
 ---
 
-## 🔧 Installation & Local Setup
+## 🚀 Setup & Run Instructions
 
-### Prerequisite
-Ensure [Node.js (v18+)](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/) are installed and running locally.
-
-### Step 1: Clone the Repository
+### 1. Clone Repository
 ```bash
-git clone <repository_url>
+git clone <repository-url>
 cd miniLidsTracker
 ```
 
-### Step 2: Backend Setup
-1. Navigate to the `backend` folder:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Setup environment variables (refer to `.env.example`).
-4. Start the backend dev server:
-   ```bash
-   npm run dev
-   ```
-The backend server will run on `http://localhost:5000`. On connection, it will automatically seed the mandatory administrator account:
-- **Email**: `admin@fasterq.in`
-- **Password**: `admin123`
-
-### Step 3: Frontend Setup
-1. In a new terminal window, navigate to the `frontend` folder:
-   ```bash
-   cd ../frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Setup environment variables (refer to `.env.example`).
-4. Start the Next.js dev server:
-   ```bash
-   npm run dev
-   ```
-The frontend application will boot on `http://localhost:3000`.
-
----
-
-## 🧪 Running Integration Tests
-To run the automated backend test suite, make sure MongoDB is running, navigate to the `backend` folder, and execute:
+### 2. Run Backend
 ```bash
-node src/tests/api.test.js
+cd backend
+npm install
+npm run dev
 ```
-The test suite clears the test database collections, seeds the admin credentials, and tests:
-- Login security and JWT generation.
-- Unauthenticated access prevention (401 errors).
-- Server-side validations (length parameters, phone regex).
-- Database CRUD actions (creating, updating, paging, query search, notes entry, and deleting leads).
+* Backend runs on **`http://localhost:5000`**
 
----
-
-## 🔒 Authentication Flow
-
-```mermaid
-sequenceDiagram
-    participant User as Sales Representative
-    participant UI as Next.js Login Page
-    participant API as Express Auth API
-    participant DB as MongoDB Atlas
-
-    User->>UI: Enter Email & Password
-    UI->>UI: Client-Side Validation
-    UI->>API: POST /api/v1/auth/login
-    API->>DB: Find User by Email
-    DB-->>API: User details (hashed password)
-    API->>API: Verify password (bcrypt.compare)
-    
-    alt Correct Credentials
-        API->>API: Sign JWT Token (User ID & Email)
-        API-->>UI: { success: true, token, user }
-        UI->>UI: Save token & user to LocalStorage
-        UI->>UI: Redirect to Dashboard (/)
-    else Incorrect Credentials
-        API-->>UI: { success: false, message: 'Invalid credentials' }
-        UI-->>User: Show Error Alert Banner
-    end
+### 3. Run Frontend
+```bash
+cd frontend
+npm install
+npm run dev
 ```
-
-1. **Login**: User enters credentials. On validation pass, a `POST` request is sent to `/api/v1/auth/login`.
-2. **Token Generation**: Upon verification, the backend issues a signed JWT token valid for 7 days.
-3. **Storage**: The token is stored in `localStorage` and managed globally by `AuthContext`.
-4. **Header Interceptor**: All subsequent calls to Leads API use the `apiFetch` wrapper, attaching `Authorization: Bearer <token>` automatically.
-5. **Session Expiry**: If the backend returns a `401 Unauthorized` (expired or invalid token), `apiFetch` catches the error, clears local storage, and redirects to `/login`.
+* Frontend runs on **`http://localhost:3000`**
 
 ---
 
-## 📖 API Documentation
+## 🌐 Live URLs
 
-All REST APIs are versioned under `/api/v1/` and return standardized JSON responses.
-
-### 1. User Authentication
-
-#### **POST** `/api/v1/auth/login`
-Authenticates user credentials and issues a bearer token.
-- **Authentication Required**: No
-- **Request Body**:
-  ```json
-  {
-    "email": "admin@fasterq.in",
-    "password": "admin123"
-  }
-  ```
-- **Success Response (200 OK)**:
-  ```json
-  {
-    "success": true,
-    "message": "Login successful",
-    "data": {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-      "user": {
-        "id": "60d21b4667d0d8992b610c85",
-        "email": "admin@fasterq.in"
-      }
-    }
-  }
-  ```
-- **Error Response (401 Unauthorized)**:
-  ```json
-  {
-    "success": false,
-    "message": "Invalid email or password",
-    "errors": []
-  }
-  ```
+* **Frontend Dashboard Website**: [https://mini-lids-tracker.vercel.app/](https://mini-lids-tracker.vercel.app/)
+* **Backend API Base URL**: [https://minilidstracker-production.up.railway.app/api/v1](https://minilidstracker-production.up.railway.app/api/v1)
 
 ---
 
-### 2. Leads Management
+## 🧠 AI Usage
+AI tools were used to assist with:
+* Planning the project structure and clean component layouts
+* Code suggestions, refactoring helper classes, and fixing styling classes
+* Debugging viewport CSS height collapses in flex layouts
+* Structuring complete documentation
 
-#### **POST** `/api/v1/leads`
-Creates a new lead profile in the system database.
-- **Authentication Required**: Yes (`Bearer <token>`)
-- **Request Body**:
-  ```json
-  {
-    "name": "Rahul Sharma",
-    "phone": "9876543210",
-    "status": "New"
-  }
-  ```
-- **Success Response (201 Created)**:
-  ```json
-  {
-    "success": true,
-    "message": "Lead created successfully",
-    "data": {
-      "_id": "60d21b4667d0d8992b610c89",
-      "name": "Rahul Sharma",
-      "phone": "9876543210",
-      "status": "New",
-      "notes": [],
-      "createdAt": "2026-07-15T18:46:00.000Z",
-      "updatedAt": "2026-07-15T18:46:00.000Z"
-    }
-  }
-  ```
-- **Error Response (400 Bad Request)**:
-  ```json
-  {
-    "success": false,
-    "message": "Validation failed",
-    "errors": [
-      {
-        "field": "phone",
-        "message": "Phone number must be exactly 10 digits"
-      }
-    ]
-  }
-  ```
-
-#### **GET** `/api/v1/leads`
-Lists leads with pagination support, status filter, and query-based search.
-- **Authentication Required**: Yes (`Bearer <token>`)
-- **Query Parameters**:
-  - `q` (Optional): Search term matching name or phone.
-  - `status` (Optional): Status value filter (`New`, `Contacted`, `Interested`, etc.).
-  - `page` (Optional): Page index (Default: `1`).
-  - `limit` (Optional): Number of leads per page (Default: `10`).
-- **Success Response (200 OK)**:
-  ```json
-  {
-    "success": true,
-    "message": "Leads retrieved successfully",
-    "data": {
-      "leads": [
-        {
-          "_id": "60d21b4667d0d8992b610c89",
-          "name": "Rahul Sharma",
-          "phone": "9876543210",
-          "status": "New",
-          "notes": [],
-          "createdAt": "2026-07-15T18:46:00.000Z"
-        }
-      ],
-      "pagination": {
-        "total": 1,
-        "page": 1,
-        "limit": 10,
-        "totalPages": 1
-      },
-      "stats": {
-        "total": 12,
-        "New": 4,
-        "Contacted": 2,
-        "Interested": 3,
-        "Converted": 2,
-        "Lost": 1
-      }
-    }
-  }
-  ```
-
-#### **GET** `/api/v1/leads/:id`
-Fetches the complete lead file, including its full note chronology.
-- **Authentication Required**: Yes (`Bearer <token>`)
-- **Success Response (200 OK)**:
-  ```json
-  {
-    "success": true,
-    "message": "Lead retrieved successfully",
-    "data": {
-      "_id": "60d21b4667d0d8992b610c89",
-      "name": "Rahul Sharma",
-      "phone": "9876543210",
-      "status": "New",
-      "notes": [
-        {
-          "_id": "60d21b4667d0d8992b610c9a",
-          "text": "Initial welcome call completed.",
-          "createdAt": "2026-07-15T18:47:00.000Z"
-        }
-      ],
-      "createdAt": "2026-07-15T18:46:00.000Z",
-      "updatedAt": "2026-07-15T18:47:00.000Z"
-    }
-  }
-  ```
-- **Error Response (404 Not Found)**:
-  ```json
-  {
-    "success": false,
-    "message": "Lead not found",
-    "errors": []
-  }
-  ```
-
-#### **PATCH** `/api/v1/leads/:id`
-Updates lead parameters (name, phone, and status).
-- **Authentication Required**: Yes (`Bearer <token>`)
-- **Request Body** (Supports partial updates):
-  ```json
-  {
-    "status": "Interested"
-  }
-  ```
-- **Success Response (200 OK)**:
-  ```json
-  {
-    "success": true,
-    "message": "Lead updated successfully",
-    "data": {
-      "_id": "60d21b4667d0d8992b610c89",
-      "name": "Rahul Sharma",
-      "phone": "9876543210",
-      "status": "Interested",
-      "notes": [],
-      "createdAt": "2026-07-15T18:46:00.000Z",
-      "updatedAt": "2026-07-15T18:49:00.000Z"
-    }
-  }
-  ```
-
-#### **POST** `/api/v1/leads/:id/notes`
-Adds an interaction log to the lead timeline.
-- **Authentication Required**: Yes (`Bearer <token>`)
-- **Request Body**:
-  ```json
-  {
-    "text": "Customer requested callback tomorrow at 3 PM."
-  }
-  ```
-- **Success Response (200 OK)**:
-  ```json
-  {
-    "success": true,
-    "message": "Note added successfully",
-    "data": {
-      "_id": "60d21b4667d0d8992b610c89",
-      "notes": [
-        {
-          "text": "Customer requested callback tomorrow at 3 PM.",
-          "_id": "60d21b4667d0d8992b610c9c",
-          "createdAt": "2026-07-15T18:50:00.000Z"
-        }
-      ]
-    }
-  }
-  ```
-- **Error Response (400 Bad Request)**:
-  ```json
-  {
-    "success": false,
-    "message": "Validation failed",
-    "errors": [
-      {
-        "field": "text",
-        "message": "Note text must be between 2 and 500 characters"
-      }
-    ]
-  }
-  ```
-
-#### **DELETE** `/api/v1/leads/:id`
-Deletes a lead profile permanently from the database.
-- **Authentication Required**: Yes (`Bearer <token>`)
-- **Success Response (200 OK)**:
-  ```json
-  {
-    "success": true,
-    "message": "Lead deleted successfully",
-    "data": {}
-  }
-  ```
+*All generated code was thoroughly reviewed, understood, tested, and modified to fit active CRM workflow needs. I understand how the application works, can debug the codebase, and can confidently extend it by adding new features.*
 
 ---
 
-## ☁️ Deployment Guide
+## 📋 Assignment Requirements Status
 
-### Backend Deployment (Render)
-1. Go to [Render](https://render.com/) and create a new **Web Service**.
-2. Connect your Git repository.
-3. Configure settings:
-   - **Environment**: `Node`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-4. Add **Environment Variables** in Render settings:
-   - `MONGODB_URI`: Your MongoDB Atlas URI.
-   - `JWT_SECRET`: A secure, secret string.
-   - `CORS_ORIGIN`: Your production frontend URL (e.g. `https://your-app.vercel.app`).
-   - `NODE_ENV`: `production`
-
-### Frontend Deployment (Vercel)
-1. Go to [Vercel](https://vercel.com/) and import your project.
-2. Choose `frontend` directory as the project root.
-3. Set the framework preset: **Next.js**.
-4. Set **Environment Variables** in Vercel settings:
-   - `NEXT_PUBLIC_API_URL`: Your deployed Render API root URL (e.g. `https://your-api.onrender.com/api/v1`).
-5. Click **Deploy**.
-
-### Database Deployment (MongoDB Atlas)
-1. Register at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
-2. Create a free shared cluster (M0) and copy the connection string.
-3. Whitelist access from all IP addresses (`0.0.0.0/0`) or configure specific Render service access.
-4. Set up database credentials and configure the connection string in your Render backend `.env` variables.
-
----
-
-## 🔮 Future Improvements
-
-1. **Multiple User Roles**: Implement granular access permissions (e.g., Administrator, Sales Rep, Viewer).
-2. **Audit Logging**: Systematically trace user actions (e.g. tracking who changed a lead status or deleted files).
-3. **Advanced Analytics**: Interactive charts showing conversions, lead age, and team performance metrics.
-4. **Calendar Integration**: Schedule call events directly in Google Calendar or Outlook.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+* **Authentication (JWT)**: ✅ Complete
+* **CRUD Operations (Leads)**: ✅ Complete
+* **Search Functionality**: ✅ Complete
+* **Status Pipeline Filters**: ✅ Complete
+* **Notes Timeline Management**: ✅ Complete
+* **Server-side Schema Validation**: ✅ Complete
+* **Fully Responsive Carousel UI**: ✅ Complete
+* **Frontend Vercel Deployment**: ✅ Complete
+* **Backend Railway Deployment**: ✅ Complete
