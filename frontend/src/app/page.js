@@ -302,7 +302,7 @@ const Dashboard = () => {
           <span className="block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2.5 select-none">
             Filter Status Pipeline
           </span>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex overflow-x-auto gap-2 pb-1.5 scrollbar-none w-full -mx-1 px-1">
             {STATUS_FILTERS.map((status) => {
               const isActive = selectedStatus === status;
               const count = getStatusCount(status);
@@ -310,7 +310,7 @@ const Dashboard = () => {
                 <button
                   key={status}
                   onClick={() => handleStatusFilterChange(status)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                  className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                     isActive
                       ? 'bg-orange-500 border-orange-500 text-white shadow-md shadow-orange-500/10'
                       : 'bg-white/60 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-200/30 dark:border-gray-800/40 text-gray-600 dark:text-gray-400'
