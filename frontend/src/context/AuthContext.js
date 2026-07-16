@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import { getApiUrl } from '../utils/api';
 
 const AuthContext = createContext(null);
 
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   }, []);
- const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = getApiUrl();
   const login = async (email, password) => {
     setLoading(true);
     try {
