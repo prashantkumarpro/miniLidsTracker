@@ -1,4 +1,7 @@
 require('dotenv').config();
+if (process.env.MONGODB_URI_TEST) {
+  process.env.MONGODB_URI = process.env.MONGODB_URI_TEST;
+}
 const assert = require('assert');
 const app = require('../app');
 const mongoose = require('mongoose');
