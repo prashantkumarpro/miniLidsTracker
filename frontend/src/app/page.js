@@ -399,12 +399,12 @@ const Dashboard = () => {
 
           {/* Pagination Controls */}
           {pagination.totalPages > 1 && (
-            <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-6">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-gray-100 dark:border-gray-800 pt-6">
+              <span className="text-xs text-gray-500 dark:text-gray-400 text-center sm:text-left select-none">
                 Showing page <span className="font-semibold text-gray-800 dark:text-gray-200">{pagination.page}</span> of <span className="font-semibold text-gray-800 dark:text-gray-200">{pagination.totalPages}</span> ({pagination.total} leads)
               </span>
               
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 justify-center w-full sm:w-auto">
                 <button
                   onClick={handlePrevPage}
                   disabled={pagination.page <= 1}
