@@ -108,7 +108,7 @@ const StatsCards = ({ stats }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 [@media(min-width:340px)]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
       {cards.map((card, index) => {
         // Calculate ratio percentage relative to total leads
         const percentage = currentStats.total > 0 ? Math.round((card.value / currentStats.total) * 100) : 0;
