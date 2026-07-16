@@ -397,7 +397,7 @@ const Dashboard = () => {
           <button
             type="button"
             onClick={() => scrollCarousel('left')}
-            className="hidden lg:flex absolute -left-5 top-[40%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 cursor-pointer"
+            className="hidden sm:flex absolute -left-5 top-[40%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 cursor-pointer"
             title="Scroll Left"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -409,7 +409,7 @@ const Dashboard = () => {
           <button
             type="button"
             onClick={() => scrollCarousel('right')}
-            className="hidden lg:flex absolute -right-5 top-[40%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 cursor-pointer"
+            className="hidden sm:flex absolute -right-5 top-[40%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 cursor-pointer"
             title="Scroll Right"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
