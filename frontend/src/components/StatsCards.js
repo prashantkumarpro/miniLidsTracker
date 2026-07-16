@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 
-const StatsCards = ({ stats }) => {
+const StatsCards = ({ stats, isLeadsLoading }) => {
   const carouselRef = useRef(null);
 
   const scrollCarousel = (direction) => {
@@ -11,6 +11,37 @@ const StatsCards = ({ stats }) => {
       carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
+
+  if (isLeadsLoading && !stats) {
+    return (
+      <div className="relative group/stats select-none">
+        {/* Left Arrow Placeholder */}
+        <div className="hidden sm:block absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-slate-900/40 border border-gray-800/30" />
+        {/* Right Arrow Placeholder */}
+        <div className="hidden sm:block absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-slate-900/40 border border-gray-800/30" />
+
+        <div className="flex overflow-x-auto gap-4 pb-3 scrollbar-none select-none w-full -mx-3 px-3 lg:mx-0 lg:px-0">
+          {[...Array(6)].map((_, index) => (
+            <div
+              key={index}
+              className="min-w-[155px] sm:min-w-[200px] lg:min-w-[220px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 lg:p-6 rounded-2xl shadow-xs flex flex-col justify-between h-[130px] relative overflow-hidden animate-pulse"
+            >
+              <div className="flex justify-between items-start">
+                <div className="w-16 h-3 bg-gray-200 dark:bg-gray-800 rounded" />
+                <div className="w-8 h-8 bg-gray-200 dark:bg-gray-800/50 rounded-lg" />
+              </div>
+              <div className="mt-4 space-y-2">
+                <div className="w-10 h-6 bg-gray-200 dark:bg-gray-800 rounded" />
+                <div className="w-20 h-2 bg-gray-200 dark:bg-gray-800/40 rounded" />
+                <div className="w-full h-1 bg-gray-250 dark:bg-gray-900 rounded-full mt-2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   const defaultStats = {
     total: 0,
     New: 0,
