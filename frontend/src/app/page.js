@@ -191,6 +191,18 @@ const Dashboard = () => {
     setCurrentPage(1); // Reset page on filter modify
   };
 
+  // Keyboard Shortcut listener for Ctrl+K/Cmd+K to focus search input
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('leads-search-input')?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   if (authLoading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
@@ -203,6 +215,13 @@ const Dashboard = () => {
   }
 
   if (!isAuthenticated) return null;
+
+  // Helper to get count of leads per status dynamically for filter chips
+  const getStatusCount = (status) => {
+    if (!stats) return 0;
+    if (status === 'All') return stats.total || 0;
+    return stats[status] || 0;
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative">
@@ -221,8 +240,8 @@ const Dashboard = () => {
       {/* Header and Add Action */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Sales Leads Overview
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white">
+            Sales Pipeline Dashboard
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Real-time pipeline monitoring and lead communication records.
@@ -230,7 +249,7 @@ const Dashboard = () => {
         </div>
         <button
           onClick={openAddModal}
-          className="inline-flex items-center justify-center px-5 py-2.5 bg-orange-500 hover:bg-orange-600 border border-transparent rounded-xl text-sm font-semibold text-white shadow-xs hover:shadow-md transition-all gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
+          className="inline-flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-orange-650 to-orange-500 hover:from-orange-700 hover:to-orange-650 border border-transparent rounded-xl text-sm font-bold text-white shadow-md hover:shadow-orange-500/10 hover:scale-[1.01] active:scale-[0.99] transition-all gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
@@ -243,53 +262,68 @@ const Dashboard = () => {
       <StatsCards stats={stats} />
 
       {/* Search and Filters Controller */}
-      <div className="bg-white dark:bg-[#121c2f] border border-gray-100 dark:border-gray-700/60 rounded-2xl p-5 shadow-xs space-y-4">
+      <div className="bg-white/60 dark:bg-[#0c111e]/40 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-5">
         
         {/* Top Controls: Search Bar */}
         <div className="max-w-md relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-            <svg className="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-4 w-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
           <input
+            id="leads-search-input"
             type="text"
-            placeholder="Search by lead name or 10-digit phone..."
+            placeholder="Search by lead name or phone..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
+            className="w-full pl-10 pr-16 py-2.5 border border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
           />
-          {searchQuery && (
+          {searchQuery ? (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer"
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-450 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
+          ) : (
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-[10px] font-bold text-gray-400 dark:text-gray-500 select-none">
+                Ctrl K
+              </kbd>
+            </div>
           )}
         </div>
 
         {/* Bottom Controls: Filter Chips */}
         <div>
-          <span className="block text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2.5">
+          <span className="block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2.5 select-none">
             Filter Status Pipeline
           </span>
           <div className="flex flex-wrap gap-2">
             {STATUS_FILTERS.map((status) => {
               const isActive = selectedStatus === status;
+              const count = getStatusCount(status);
               return (
                 <button
                   key={status}
                   onClick={() => handleStatusFilterChange(status)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                     isActive
-                      ? 'bg-orange-500 border-orange-500 text-white shadow-xs'
-                      : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300'
+                      ? 'bg-orange-500 border-orange-500 text-white shadow-md shadow-orange-500/10'
+                      : 'bg-white/60 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-205/30 dark:border-gray-850/40 text-gray-600 dark:text-gray-400'
                   }`}
                 >
-                  {status}
+                  <span>{status}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                    isActive 
+                      ? 'bg-orange-600 text-white' 
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+                  }`}>
+                    {count}
+                  </span>
                 </button>
               );
             })}

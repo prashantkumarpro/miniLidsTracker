@@ -21,6 +21,18 @@ const getStatusStyles = (status) => {
   }
 };
 
+// Helper for status dot indicator color
+const getStatusDotColor = (status) => {
+  switch (status) {
+    case 'New': return 'bg-blue-500 shadow-blue-500/50';
+    case 'Contacted': return 'bg-amber-500 shadow-amber-500/50';
+    case 'Interested': return 'bg-indigo-500 shadow-indigo-500/50';
+    case 'Converted': return 'bg-emerald-500 shadow-emerald-500/50';
+    case 'Lost': return 'bg-rose-500 shadow-rose-500/50';
+    default: return 'bg-gray-400 shadow-gray-400/50';
+  }
+};
+
 const LeadCard = ({ lead, onEdit, onDelete }) => {
   const { _id, name, phone, status, notes = [], createdAt } = lead;
   const [copied, setCopied] = useState(false);
@@ -57,31 +69,32 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
   const lastNote = notes.length > 0 ? notes[notes.length - 1] : null;
 
   return (
-    <div className="bg-white dark:bg-[#121c2f] border border-gray-100/80 dark:border-gray-700/60 rounded-2xl p-6 shadow-xs hover:shadow-lg dark:hover:shadow-black/50 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
+    <div className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
       
-      {/* Background Accent on Card Hover */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-orange-400 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Top Border Accent Indicator */}
+      <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-orange-500 to-orange-400 rounded-t-2xl opacity-10 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div>
         {/* Header: Name and Status Badge */}
         <div className="flex justify-between items-start gap-3">
-          <Link href={`/leads/${_id}`} className="hover:text-orange-500 transition-colors">
-            <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base leading-tight line-clamp-1 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+          <Link href={`/leads/${_id}`} className="hover:text-orange-500 transition-colors flex items-center gap-2 group-hover:translate-x-0.5 transition-transform duration-300">
+            <span className={`w-2 h-2 rounded-full ${getStatusDotColor(status)} shadow-[0_0_8px_currentColor] animate-pulse`} />
+            <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base leading-tight line-clamp-1 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
               {name}
             </h3>
           </Link>
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getStatusStyles(status)}`}>
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border select-none ${getStatusStyles(status)}`}>
             {status}
           </span>
         </div>
 
         {/* Phone details & Copy */}
-        <div className="mt-2.5 text-sm text-gray-500 dark:text-gray-400 flex items-center justify-between">
+        <div className="mt-3.5 text-sm text-gray-500 dark:text-gray-400 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <svg className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
             </svg>
-            <a href={`tel:${phone}`} className="font-medium text-gray-600 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+            <a href={`tel:${phone}`} className="font-semibold text-gray-650 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
               {formatPhone(phone)}
             </a>
           </div>
@@ -89,7 +102,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
           {/* Clipboard Trigger */}
           <button
             onClick={handleCopyPhone}
-            className="p-1 rounded-md text-gray-300 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all cursor-pointer"
+            className="p-1 rounded-md text-gray-305 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-350 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all cursor-pointer"
             title="Copy phone to clipboard"
           >
             {copied ? (
@@ -105,42 +118,42 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
         </div>
 
         {/* Last Note Preview */}
-        <div className="mt-4 bg-gray-50/50 dark:bg-gray-800/40 rounded-xl p-3.5 border border-gray-100/60 dark:border-gray-800 relative">
-          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 block uppercase tracking-wider mb-1.5 select-none">
+        <div className="mt-4 bg-gray-150/30 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/40 rounded-xl p-4 relative">
+          <span className="text-[9px] font-extrabold text-gray-400 dark:text-gray-500 block uppercase tracking-wider mb-1.5 select-none">
             Last Communication
           </span>
           <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 min-h-[2.5rem] leading-relaxed">
-            {lastNote ? lastNote.text : <span className="text-gray-450 dark:text-gray-550 italic font-normal">No notes logged yet.</span>}
+            {lastNote ? lastNote.text : <span className="text-gray-400 dark:text-gray-550 italic font-normal">No notes logged yet.</span>}
           </p>
         </div>
       </div>
 
       {/* Footer Details & Actions */}
-      <div className="mt-6 pt-4 border-t border-gray-50 dark:border-gray-800/60 flex items-center justify-between">
-        <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="mt-6 pt-4 border-t border-gray-100/50 dark:border-gray-800/40 flex items-center justify-between">
+        <span className="text-[11px] font-semibold text-gray-400 dark:text-gray-500 flex items-center gap-1.5 select-none">
+          <svg className="w-3.5 h-3.5 text-gray-350 dark:text-gray-650" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
           {formatDate(createdAt)}
         </span>
 
         {/* Action Triggers */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           <Link
             href={`/leads/${_id}`}
-            className="text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-white dark:hover:text-white hover:bg-orange-500 dark:hover:bg-orange-600 bg-orange-50 dark:bg-orange-950/40 px-2.5 py-1.5 rounded-lg transition-all duration-200"
+            className="text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-xs hover:shadow-orange-500/10 cursor-pointer"
           >
             View
           </Link>
           <button
             onClick={() => onEdit(lead)}
-            className="text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 bg-transparent px-2.5 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
+            className="text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-205/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
           >
             Edit
           </button>
           <button
             onClick={() => onDelete(lead)}
-            className="text-xs font-semibold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/40 bg-transparent px-2.5 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
+            className="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
           >
             Delete
           </button>
