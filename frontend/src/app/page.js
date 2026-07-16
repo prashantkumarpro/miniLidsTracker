@@ -7,8 +7,10 @@ import { apiFetch } from '../utils/api';
 import StatsCards from '../components/StatsCards';
 import LeadCard from '../components/LeadCard';
 import LeadCardSkeleton from '../components/LeadCardSkeleton';
-import LeadModal from '../components/LeadModal';
-import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
+import dynamic from 'next/dynamic';
+
+const LeadModal = dynamic(() => import('../components/LeadModal'), { ssr: false });
+const ConfirmDeleteModal = dynamic(() => import('../components/ConfirmDeleteModal'), { ssr: false });
 
 const STATUS_FILTERS = ['All', 'New', 'Contacted', 'Interested', 'Converted', 'Lost'];
 

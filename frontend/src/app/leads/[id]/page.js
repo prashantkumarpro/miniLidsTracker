@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { useAuth } from '../../../context/AuthContext';
 import { apiFetch } from '../../../utils/api';
 import { getStatusStyles } from '../../../components/LeadCard';
-import LeadModal from '../../../components/LeadModal';
-import ConfirmDeleteModal from '../../../components/ConfirmDeleteModal';
+import dynamic from 'next/dynamic';
+
+const LeadModal = dynamic(() => import('../../../components/LeadModal'), { ssr: false });
+const ConfirmDeleteModal = dynamic(() => import('../../../components/ConfirmDeleteModal'), { ssr: false });
 
 const LEAD_STATUS_VALUES = ['New', 'Contacted', 'Interested', 'Converted', 'Lost'];
 
