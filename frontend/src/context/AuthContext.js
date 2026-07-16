@@ -24,11 +24,10 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   }, []);
-
+ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
