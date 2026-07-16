@@ -79,7 +79,7 @@ const LoginPage = () => {
         {/* Brand Banner */}
         <div className="text-center">
           <div className="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-tr from-orange-600 to-orange-500 flex items-center justify-center text-white font-black text-2xl shadow-md mb-5 hover:scale-105 transition-transform duration-300">
-            L
+            Q
           </div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
             Welcome Back

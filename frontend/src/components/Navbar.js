@@ -14,25 +14,25 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white/70 dark:bg-[#070b14]/70 border-b border-gray-200/30 dark:border-gray-800/40 sticky top-0 z-50 backdrop-blur-lg transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo Section */}
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-orange-500 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 group-hover:shadow-orange-500/20 transition-all duration-300">
-                F
+            <Link href="/" className="flex-shrink-0 flex items-center gap-2.5 group">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-600 to-orange-500 flex items-center justify-center text-white font-black text-lg shadow-md group-hover:scale-105 group-hover:shadow-orange-500/20 transition-all duration-300">
+                Q
               </div>
-              <span className="font-extrabold text-lg text-gray-900 dark:text-white tracking-tight group-hover:text-orange-500 transition-colors">
+              <span className="font-extrabold text-base sm:text-lg text-gray-900 dark:text-white tracking-tight group-hover:text-orange-500 transition-colors">
                 Faster<span className="text-orange-500 font-extrabold">Q</span>
               </span>
             </Link>
           </div>
 
           {/* User Profile & Logout */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             
             {/* User Profile Block */}
-            <div className="flex items-center gap-3 bg-gray-100/40 dark:bg-gray-900/40 border border-gray-200/30 dark:border-gray-800/40 rounded-full pl-3 pr-2 py-1 select-none transition-all hover:bg-gray-100/60 dark:hover:bg-gray-900/60">
+            <div className="flex items-center gap-2 sm:gap-3 bg-gray-100/40 dark:bg-gray-900/40 border border-gray-200/30 dark:border-gray-800/40 rounded-full p-1 sm:pl-3 sm:pr-1 py-1 select-none transition-all hover:bg-gray-100/60 dark:hover:bg-gray-900/60">
               <div className="hidden sm:flex flex-col text-left mr-1">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />

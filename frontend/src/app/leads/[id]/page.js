@@ -218,7 +218,7 @@ const LeadDetailsPage = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 relative">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 relative">
       
       {/* Toast Notification */}
       {toast.show && (
@@ -245,7 +245,7 @@ const LeadDetailsPage = () => {
       </div>
 
       {/* Title Bar & Quick Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 p-6 rounded-2xl backdrop-blur-md shadow-xs">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-6 rounded-2xl backdrop-blur-md shadow-xs">
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black tracking-tight text-gray-950 dark:text-white">{lead.name}</h1>
@@ -277,7 +277,7 @@ const LeadDetailsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         
         {/* Left Column: Lead Info Card */}
-        <div className="lg:col-span-1 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-6">
+        <div className="lg:col-span-1 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-4 sm:p-6 backdrop-blur-md shadow-xs space-y-6">
           <h2 className="text-sm font-extrabold text-gray-950 dark:text-white border-b border-gray-100/50 dark:border-gray-800/40 pb-3 uppercase tracking-wider select-none">
             Lead Information
           </h2>
@@ -351,7 +351,7 @@ const LeadDetailsPage = () => {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Add Note Panel */}
-          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs">
+          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-4 sm:p-6 backdrop-blur-md shadow-xs">
             <h2 className="text-sm font-extrabold text-gray-950 dark:text-white border-b border-gray-100/50 dark:border-gray-800/40 pb-3 mb-4 uppercase tracking-wider select-none">
               Add Interaction Note
             </h2>
@@ -391,7 +391,7 @@ const LeadDetailsPage = () => {
           </div>
 
           {/* Timeline History */}
-          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs">
+          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-4 sm:p-6 backdrop-blur-md shadow-xs">
             <h2 className="text-sm font-extrabold text-gray-950 dark:text-white border-b border-gray-100/50 dark:border-gray-800/40 pb-3 mb-6 uppercase tracking-wider select-none">
               Activity History ({lead.notes.length})
             </h2>
@@ -428,7 +428,7 @@ const LeadDetailsPage = () => {
                             </div>
 
                             {/* Note Content */}
-                            <div className="flex-1 min-w-0 bg-white/50 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/30 rounded-2xl p-5 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+                            <div className="flex-1 min-w-0 bg-white/50 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/30 rounded-2xl p-4 sm:p-5 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
                               <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
                                 {note.text}
                               </p>

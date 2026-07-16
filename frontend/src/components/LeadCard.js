@@ -81,7 +81,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
   const lastNote = notes.length > 0 ? notes[notes.length - 1] : null;
 
   return (
-    <div className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
+    <div className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 sm:p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
       
       {/* Top Border Accent Indicator */}
       <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${getStatusGradient(status)} rounded-t-2xl opacity-20 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -130,7 +130,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
         </div>
 
         {/* Last Note Preview */}
-        <div className="mt-4 bg-gray-100/30 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/40 rounded-xl p-4 relative">
+        <div className="mt-3.5 sm:mt-4 bg-gray-100/30 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/40 rounded-xl p-3 sm:p-4 relative">
           <span className="text-[9px] font-extrabold text-gray-400 dark:text-gray-500 block uppercase tracking-wider mb-1.5 select-none">
             Last Communication
           </span>
