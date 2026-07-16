@@ -91,7 +91,7 @@ npm run dev
 ## 🌐 Live URLs
 
 * **Frontend Dashboard Website**: [https://mini-lids-tracker.vercel.app/](https://mini-lids-tracker.vercel.app/)
-* **Backend API Base URL**: [https://minilidstracker-production.up.railway.app/api/v1](https://minilidstracker-production.up.railway.app/api/v1)
+* **Backend API Base URL**: [https://minilidstracker-production.up.railway.app/api/v1](https://minilidstracker-production.up.railway.app/api/v1/health)
 
 ---
 
