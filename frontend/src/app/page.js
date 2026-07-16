@@ -249,7 +249,7 @@ const Dashboard = () => {
         </div>
         <button
           onClick={openAddModal}
-          className="inline-flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-orange-650 to-orange-500 hover:from-orange-700 hover:to-orange-650 border border-transparent rounded-xl text-sm font-bold text-white shadow-md hover:shadow-orange-500/10 hover:scale-[1.01] active:scale-[0.99] transition-all gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
+          className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-orange-650 to-orange-500 hover:from-orange-700 hover:to-orange-650 border border-transparent rounded-xl text-sm font-bold text-white shadow-md hover:shadow-orange-500/10 hover:scale-[1.01] active:scale-[0.99] transition-all gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>

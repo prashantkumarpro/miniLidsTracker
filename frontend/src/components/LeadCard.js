@@ -33,6 +33,18 @@ const getStatusDotColor = (status) => {
   }
 };
 
+// Helper for status-based top border gradient
+const getStatusGradient = (status) => {
+  switch (status) {
+    case 'New': return 'from-blue-550 to-blue-400 dark:from-blue-600 dark:to-blue-500';
+    case 'Contacted': return 'from-amber-500 to-amber-400 dark:from-amber-600 dark:to-amber-500';
+    case 'Interested': return 'from-indigo-500 to-indigo-400 dark:from-indigo-600 dark:to-indigo-500';
+    case 'Converted': return 'from-emerald-500 to-emerald-400 dark:from-emerald-600 dark:to-emerald-500';
+    case 'Lost': return 'from-rose-500 to-rose-400 dark:from-rose-600 dark:to-rose-500';
+    default: return 'from-gray-500 to-gray-400 dark:from-gray-600 dark:to-gray-500';
+  }
+};
+
 const LeadCard = ({ lead, onEdit, onDelete }) => {
   const { _id, name, phone, status, notes = [], createdAt } = lead;
   const [copied, setCopied] = useState(false);
@@ -72,7 +84,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
     <div className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
       
       {/* Top Border Accent Indicator */}
-      <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-orange-500 to-orange-400 rounded-t-2xl opacity-10 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${getStatusGradient(status)} rounded-t-2xl opacity-20 group-hover:opacity-100 transition-opacity duration-300`} />
 
       <div>
         {/* Header: Name and Status Badge */}
@@ -129,8 +141,8 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
       </div>
 
       {/* Footer Details & Actions */}
-      <div className="mt-6 pt-4 border-t border-gray-100/50 dark:border-gray-800/40 flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-gray-400 dark:text-gray-500 flex items-center gap-1.5 select-none">
+      <div className="mt-6 pt-4 border-t border-gray-100/50 dark:border-gray-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 flex items-center gap-1.5 select-none">
           <svg className="w-3.5 h-3.5 text-gray-350 dark:text-gray-650" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
@@ -138,22 +150,22 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
         </span>
 
         {/* Action Triggers */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 justify-end w-full sm:w-auto">
           <Link
             href={`/leads/${_id}`}
-            className="text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-xs hover:shadow-orange-500/10 cursor-pointer"
+            className="text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-xs hover:shadow-orange-500/10 cursor-pointer text-center flex-1 sm:flex-none"
           >
             View
           </Link>
           <button
             onClick={() => onEdit(lead)}
-            className="text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-205/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
+            className="text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-205/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
           >
             Edit
           </button>
           <button
             onClick={() => onDelete(lead)}
-            className="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer"
+            className="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
           >
             Delete
           </button>
