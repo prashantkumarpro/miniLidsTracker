@@ -24,7 +24,7 @@ const StatsCards = ({ stats }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
       ),
-      badgeColor: 'bg-gray-150/80',
+      badgeColor: 'bg-gray-100/80',
       darkBadgeColor: 'dark:bg-gray-800/60',
       glowColor: 'group-hover:shadow-gray-500/5',
       subtext: 'Pipeline lifetime leads',
@@ -117,7 +117,7 @@ const StatsCards = ({ stats }) => {
         return (
           <div
             key={index}
-            className={`bg-white/70 dark:bg-[#0c111e]/60 border border-gray-205/30 dark:border-gray-850/40 p-4 sm:p-5 rounded-2xl shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md ${card.glowColor} transition-all duration-300 flex flex-col justify-between relative overflow-hidden group`}
+            className={`bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 rounded-2xl shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md ${card.glowColor} transition-all duration-300 flex flex-col justify-between relative overflow-hidden group`}
           >
             {/* Top Border Accent */}
             <div className={`absolute top-0 left-0 w-full h-[2px] transition-all duration-300 opacity-20 group-hover:opacity-100 ${card.barColor}`} />

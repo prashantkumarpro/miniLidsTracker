@@ -13,7 +13,7 @@ const Navbar = () => {
   const userInitials = user?.email ? user.email.charAt(0).toUpperCase() : 'A';
 
   return (
-    <nav className="bg-white/70 dark:bg-[#070b14]/70 border-b border-gray-205/30 dark:border-gray-850/40 sticky top-0 z-50 backdrop-blur-lg transition-all duration-300">
+    <nav className="bg-white/70 dark:bg-[#070b14]/70 border-b border-gray-200/30 dark:border-gray-800/40 sticky top-0 z-50 backdrop-blur-lg transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo Section */}
@@ -32,7 +32,7 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             
             {/* User Profile Block */}
-            <div className="flex items-center gap-3 bg-gray-150/40 dark:bg-gray-900/40 border border-gray-200/30 dark:border-gray-800/40 rounded-full pl-3 pr-2 py-1 select-none transition-all hover:bg-gray-150/60 dark:hover:bg-gray-900/60">
+            <div className="flex items-center gap-3 bg-gray-100/40 dark:bg-gray-900/40 border border-gray-200/30 dark:border-gray-800/40 rounded-full pl-3 pr-2 py-1 select-none transition-all hover:bg-gray-100/60 dark:hover:bg-gray-900/60">
               <div className="hidden sm:flex flex-col text-left mr-1">
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />

@@ -245,7 +245,7 @@ const LeadDetailsPage = () => {
       </div>
 
       {/* Title Bar & Quick Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-205/30 dark:border-gray-850/40 p-6 rounded-2xl backdrop-blur-md shadow-xs">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 p-6 rounded-2xl backdrop-blur-md shadow-xs">
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-black tracking-tight text-gray-950 dark:text-white">{lead.name}</h1>
@@ -260,7 +260,7 @@ const LeadDetailsPage = () => {
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
             onClick={() => setIsEditModalOpen(true)}
-            className="flex-1 sm:flex-initial inline-flex items-center justify-center px-4 py-2 border border-gray-205/50 dark:border-gray-800/60 rounded-xl text-sm font-bold text-gray-705 dark:text-gray-305 bg-white/50 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shadow-xs cursor-pointer"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center px-4 py-2 border border-gray-200/50 dark:border-gray-800/60 rounded-xl text-sm font-bold text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shadow-xs cursor-pointer"
           >
             Edit Profile
           </button>
@@ -277,7 +277,7 @@ const LeadDetailsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         
         {/* Left Column: Lead Info Card */}
-        <div className="lg:col-span-1 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-6">
+        <div className="lg:col-span-1 bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-6">
           <h2 className="text-sm font-extrabold text-gray-950 dark:text-white border-b border-gray-100/50 dark:border-gray-800/40 pb-3 uppercase tracking-wider select-none">
             Lead Information
           </h2>
@@ -286,17 +286,17 @@ const LeadDetailsPage = () => {
             
             {/* Phone Info */}
             <div>
-              <span className="block text-[9px] font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
+              <span className="block text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
                 Phone Number
               </span>
-              <a href={`tel:${lead.phone}`} className="text-sm font-semibold text-orange-655 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors">
+              <a href={`tel:${lead.phone}`} className="text-sm font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors">
                 {formatPhone(lead.phone)}
               </a>
             </div>
 
             {/* Quick Status Setter */}
             <div>
-              <label htmlFor="details-status" className="block text-[9px] font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
+              <label htmlFor="details-status" className="block text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
                 Pipeline Status
               </label>
               <div className="relative mt-1">
@@ -305,7 +305,7 @@ const LeadDetailsPage = () => {
                   value={lead.status}
                   onChange={(e) => handleStatusChange(e.target.value)}
                   disabled={isUpdatingStatus}
-                  className="w-full px-3.5 py-2 border border-gray-205/45 dark:border-gray-800/60 rounded-xl text-sm bg-white dark:bg-gray-900/60 text-gray-800 dark:text-gray-300 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 appearance-none disabled:opacity-50"
+                  className="w-full px-3.5 py-2 border border-gray-200/45 dark:border-gray-800/60 rounded-xl text-sm bg-white dark:bg-gray-900/60 text-gray-800 dark:text-gray-300 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 appearance-none disabled:opacity-50"
                 >
                   {LEAD_STATUS_VALUES.map((statusVal) => (
                     <option key={statusVal} value={statusVal} className="dark:bg-[#0c111e] dark:text-white font-semibold text-sm">
@@ -326,7 +326,7 @@ const LeadDetailsPage = () => {
 
             {/* Date Created */}
             <div>
-              <span className="block text-[9px] font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
+              <span className="block text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
                 Created On
               </span>
               <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -336,7 +336,7 @@ const LeadDetailsPage = () => {
 
             {/* Date Updated */}
             <div>
-              <span className="block text-[9px] font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
+              <span className="block text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 select-none">
                 Last Updated
               </span>
               <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -351,7 +351,7 @@ const LeadDetailsPage = () => {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Add Note Panel */}
-          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 backdrop-blur-md shadow-xs">
+          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs">
             <h2 className="text-sm font-extrabold text-gray-950 dark:text-white border-b border-gray-100/50 dark:border-gray-800/40 pb-3 mb-4 uppercase tracking-wider select-none">
               Add Interaction Note
             </h2>
@@ -382,7 +382,7 @@ const LeadDetailsPage = () => {
                 <button
                   type="submit"
                   disabled={isSubmittingNote}
-                  className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-655 to-orange-500 hover:from-orange-700 hover:to-orange-655 border border-transparent rounded-xl text-sm font-bold text-white shadow-xs hover:shadow-orange-500/10 transition-colors disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 border border-transparent rounded-xl text-sm font-bold text-white shadow-xs hover:shadow-orange-500/10 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmittingNote ? 'Saving note...' : 'Submit Note'}
                 </button>
@@ -391,7 +391,7 @@ const LeadDetailsPage = () => {
           </div>
 
           {/* Timeline History */}
-          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 backdrop-blur-md shadow-xs">
+          <div className="bg-white/70 dark:bg-[#0c111e]/50 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs">
             <h2 className="text-sm font-extrabold text-gray-950 dark:text-white border-b border-gray-100/50 dark:border-gray-800/40 pb-3 mb-6 uppercase tracking-wider select-none">
               Activity History ({lead.notes.length})
             </h2>
@@ -411,7 +411,7 @@ const LeadDetailsPage = () => {
                           {/* Vertical Connector Line */}
                           {!isLast && (
                             <span 
-                              className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-150 dark:bg-gray-800/80" 
+                              className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-800/80" 
                               aria-hidden="true" 
                             />
                           )}
@@ -428,8 +428,8 @@ const LeadDetailsPage = () => {
                             </div>
 
                             {/* Note Content */}
-                            <div className="flex-1 min-w-0 bg-white/50 dark:bg-gray-900/35 border border-gray-205/20 dark:border-gray-850/30 rounded-2xl p-5 hover:border-gray-350 dark:hover:border-gray-700 transition-colors">
-                              <p className="text-sm text-gray-750 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
+                            <div className="flex-1 min-w-0 bg-white/50 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/30 rounded-2xl p-5 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+                              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
                                 {note.text}
                               </p>
                               <div className="mt-3 text-right">

@@ -249,7 +249,7 @@ const Dashboard = () => {
         </div>
         <button
           onClick={openAddModal}
-          className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-orange-650 to-orange-500 hover:from-orange-700 hover:to-orange-650 border border-transparent rounded-xl text-sm font-bold text-white shadow-md hover:shadow-orange-500/10 hover:scale-[1.01] active:scale-[0.99] transition-all gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
+          className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 border border-transparent rounded-xl text-sm font-bold text-white shadow-md hover:shadow-orange-500/10 hover:scale-[1.01] active:scale-[0.99] transition-all gap-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
@@ -262,7 +262,7 @@ const Dashboard = () => {
       <StatsCards stats={stats} />
 
       {/* Search and Filters Controller */}
-      <div className="bg-white/60 dark:bg-[#0c111e]/40 border border-gray-205/30 dark:border-gray-850/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-5">
+      <div className="bg-white/60 dark:bg-[#0c111e]/40 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-5">
         
         {/* Top Controls: Search Bar */}
         <div className="max-w-md relative">
@@ -313,7 +313,7 @@ const Dashboard = () => {
                   className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                     isActive
                       ? 'bg-orange-500 border-orange-500 text-white shadow-md shadow-orange-500/10'
-                      : 'bg-white/60 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-205/30 dark:border-gray-850/40 text-gray-600 dark:text-gray-400'
+                      : 'bg-white/60 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-200/30 dark:border-gray-800/40 text-gray-600 dark:text-gray-400'
                   }`}
                 >
                   <span>{status}</span>

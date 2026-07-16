@@ -91,7 +91,7 @@ const LeadModal = ({ isOpen, onClose, lead = null, onSave }) => {
 
       {/* Modal Container */}
       <div className="relative w-full max-w-md mx-auto my-6 p-4 z-10">
-        <div className="relative flex flex-col w-full bg-white dark:bg-[#121c2f] border border-gray-100 dark:border-gray-850 rounded-2xl shadow-xl outline-none focus:outline-none overflow-hidden">
+        <div className="relative flex flex-col w-full bg-white dark:bg-[#121c2f] border border-gray-100 dark:border-gray-800 rounded-2xl shadow-xl outline-none focus:outline-none overflow-hidden">
           
           {/* Header */}
           <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-gray-800">
@@ -196,7 +196,7 @@ const LeadModal = ({ isOpen, onClose, lead = null, onSave }) => {
             </div>
 
             {/* Actions Footer */}
-            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-850/50">
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
               <button
                 type="button"
                 onClick={onClose}

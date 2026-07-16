@@ -29,7 +29,7 @@ const ConfirmDeleteModal = ({ isOpen, onClose, leadName, onDeleteConfirm }) => {
 
       {/* Modal Container */}
       <div className="relative w-full max-w-sm mx-auto my-6 p-4 z-10">
-        <div className="relative flex flex-col w-full bg-white dark:bg-[#121c2f] border border-gray-100 dark:border-gray-850 rounded-2xl shadow-xl outline-none focus:outline-none overflow-hidden">
+        <div className="relative flex flex-col w-full bg-white dark:bg-[#121c2f] border border-gray-100 dark:border-gray-800 rounded-2xl shadow-xl outline-none focus:outline-none overflow-hidden">
           
           {/* Main Warning Icon & Body */}
           <div className="p-6 text-center">
@@ -50,7 +50,7 @@ const ConfirmDeleteModal = ({ isOpen, onClose, leadName, onDeleteConfirm }) => {
           </div>
 
           {/* Actions Footer */}
-          <div className="flex items-center gap-3 px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-850/50 justify-center">
+          <div className="flex items-center gap-3 px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 justify-center">
             <button
               type="button"
               onClick={onClose}

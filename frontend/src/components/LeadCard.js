@@ -106,7 +106,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
             <svg className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
             </svg>
-            <a href={`tel:${phone}`} className="font-semibold text-gray-650 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+            <a href={`tel:${phone}`} className="font-semibold text-gray-600 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
               {formatPhone(phone)}
             </a>
           </div>
@@ -114,7 +114,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
           {/* Clipboard Trigger */}
           <button
             onClick={handleCopyPhone}
-            className="p-1 rounded-md text-gray-305 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-350 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all cursor-pointer"
+            className="p-1 rounded-md text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-350 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all cursor-pointer"
             title="Copy phone to clipboard"
           >
             {copied ? (
@@ -130,7 +130,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
         </div>
 
         {/* Last Note Preview */}
-        <div className="mt-4 bg-gray-150/30 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/40 rounded-xl p-4 relative">
+        <div className="mt-4 bg-gray-100/30 dark:bg-gray-900/35 border border-gray-200/20 dark:border-gray-800/40 rounded-xl p-4 relative">
           <span className="text-[9px] font-extrabold text-gray-400 dark:text-gray-500 block uppercase tracking-wider mb-1.5 select-none">
             Last Communication
           </span>
@@ -143,7 +143,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
       {/* Footer Details & Actions */}
       <div className="mt-6 pt-4 border-t border-gray-100/50 dark:border-gray-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500 flex items-center gap-1.5 select-none">
-          <svg className="w-3.5 h-3.5 text-gray-350 dark:text-gray-650" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-3.5 h-3.5 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
           {formatDate(createdAt)}
@@ -159,7 +159,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
           </Link>
           <button
             onClick={() => onEdit(lead)}
-            className="text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-205/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
+            className="text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-200/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
           >
             Edit
           </button>
