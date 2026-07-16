@@ -1,5 +1,12 @@
 export const getApiUrl = () => {
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  // Safe fallback for production environments if env variable is missing
+  if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
+    return 'https://minilidstracker-production.up.railway.app/api/v1';
+  }
+  return 'http://localhost:5000/api/v1';
 };
 
 /**
