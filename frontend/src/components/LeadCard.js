@@ -81,7 +81,7 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
   const lastNote = notes.length > 0 ? notes[notes.length - 1] : null;
 
   return (
-    <div className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 sm:p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
+    <div className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-5 lg:p-6 shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-full relative group overflow-hidden">
       
       {/* Top Border Accent Indicator */}
       <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${getStatusGradient(status)} rounded-t-2xl opacity-20 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -153,19 +153,19 @@ const LeadCard = ({ lead, onEdit, onDelete }) => {
         <div className="flex items-center gap-1.5 justify-end w-full sm:w-auto">
           <Link
             href={`/leads/${_id}`}
-            className="text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 px-3 py-1.5 rounded-lg transition-all duration-200 shadow-xs hover:shadow-orange-500/10 cursor-pointer text-center flex-1 sm:flex-none"
+            className="text-[11px] sm:text-xs font-bold text-white bg-orange-500 hover:bg-orange-600 px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 shadow-xs hover:shadow-orange-500/10 cursor-pointer text-center flex-1 sm:flex-none"
           >
             View
           </Link>
           <button
             onClick={() => onEdit(lead)}
-            className="text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-200/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
+            className="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 border border-gray-200/40 dark:border-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-900 bg-transparent px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
           >
             Edit
           </button>
           <button
             onClick={() => onDelete(lead)}
-            className="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 bg-transparent px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
+            className="text-[11px] sm:text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 bg-transparent px-3 py-1.5 sm:py-2 rounded-lg transition-all duration-200 cursor-pointer text-center flex-1 sm:flex-none"
           >
             Delete
           </button>

@@ -108,7 +108,7 @@ const StatsCards = ({ stats }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 [@media(min-width:340px)]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="grid grid-cols-1 [@media(min-width:340px)]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
       {cards.map((card, index) => {
         // Calculate ratio percentage relative to total leads
         const percentage = currentStats.total > 0 ? Math.round((card.value / currentStats.total) * 100) : 0;
@@ -117,7 +117,7 @@ const StatsCards = ({ stats }) => {
         return (
           <div
             key={index}
-            className={`bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 rounded-2xl shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md ${card.glowColor} transition-all duration-300 flex flex-col justify-between relative overflow-hidden group`}
+            className={`bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 lg:p-6 rounded-2xl shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md ${card.glowColor} transition-all duration-300 flex flex-col justify-between relative overflow-hidden group`}
           >
             {/* Top Border Accent */}
             <div className={`absolute top-0 left-0 w-full h-[2px] transition-all duration-300 opacity-20 group-hover:opacity-100 ${card.barColor}`} />
@@ -133,7 +133,7 @@ const StatsCards = ({ stats }) => {
 
             <div className="mt-4">
               <div className="flex items-baseline gap-1.5">
-                <span className={`text-2xl sm:text-3xl font-black tracking-tight ${card.textColor}`}>
+                <span className={`text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight ${card.textColor}`}>
                   {card.value}
                 </span>
                 {!isTotalCard && card.value > 0 && (
