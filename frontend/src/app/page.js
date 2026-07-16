@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '../utils/api';
@@ -14,6 +14,7 @@ const STATUS_FILTERS = ['All', 'New', 'Contacted', 'Interested', 'Converted', 'L
 const Dashboard = () => {
   const { isAuthenticated, loading: authLoading, logout } = useAuth();
   const router = useRouter();
+  const carouselRef = useRef(null);
 
   // API Data States
   const [leads, setLeads] = useState([]);
@@ -33,7 +34,6 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('All');
-  const [currentPage, setCurrentPage] = useState(1);
 
   // Modal Control States
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -62,14 +62,13 @@ const Dashboard = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchQuery);
-      setCurrentPage(1); // Reset page on query modify
     }, 400);
 
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
   // Fetch leads function
-  const fetchLeads = useCallback(async (pageToFetch = 1) => {
+  const fetchLeads = useCallback(async (pageToFetch = 1, append = false) => {
     setIsLeadsLoading(true);
     setLeadsError('');
     try {
@@ -79,7 +78,16 @@ const Dashboard = () => {
       const response = await apiFetch(endpoint, {}, logout);
       
       if (response.success) {
-        setLeads(response.data.leads || []);
+        const newLeads = response.data.leads || [];
+        if (append) {
+          setLeads(prev => {
+            const existingIds = new Set(prev.map(l => l._id));
+            const uniqueNewLeads = newLeads.filter(l => !existingIds.has(l._id));
+            return [...prev, ...uniqueNewLeads];
+          });
+        } else {
+          setLeads(newLeads);
+        }
         setPagination(response.data.pagination || { total: 0, page: 1, limit: 10, totalPages: 1 });
         setStats(response.data.stats || null);
       }
@@ -95,21 +103,13 @@ const Dashboard = () => {
   // Initial and reactive fetch
   useEffect(() => {
     if (isAuthenticated) {
-      fetchLeads(currentPage);
+      fetchLeads(1, false);
     }
-  }, [isAuthenticated, currentPage, selectedStatus, debouncedSearch, fetchLeads]);
+  }, [isAuthenticated, selectedStatus, debouncedSearch, fetchLeads]);
 
-  // Pagination Handlers
-  const handlePrevPage = () => {
-    if (pagination.page > 1) {
-      setCurrentPage(pagination.page - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (pagination.page < pagination.totalPages) {
-      setCurrentPage(pagination.page + 1);
-    }
+  // Status Filter Select
+  const handleStatusFilterChange = (status) => {
+    setSelectedStatus(status);
   };
 
   // Add/Edit Save Handler
@@ -124,7 +124,7 @@ const Dashboard = () => {
 
         if (response.success) {
           triggerToast('Lead updated successfully!');
-          fetchLeads(currentPage);
+          fetchLeads(1, false);
         }
       } else {
         // Add Action
@@ -135,8 +135,7 @@ const Dashboard = () => {
 
         if (response.success) {
           triggerToast('Lead created successfully!');
-          setCurrentPage(1); // Go back to first page
-          fetchLeads(1);
+          fetchLeads(1, false);
         }
       }
     } catch (err) {
@@ -155,12 +154,7 @@ const Dashboard = () => {
 
       if (response.success) {
         triggerToast('Lead profile deleted successfully.');
-        // If we deleted the last item on the page, move page back
-        if (leads.length === 1 && currentPage > 1) {
-          setCurrentPage(currentPage - 1);
-        } else {
-          fetchLeads(currentPage);
-        }
+        fetchLeads(1, false);
       }
     } catch (err) {
       if (err.statusCode !== 401) {
@@ -185,10 +179,22 @@ const Dashboard = () => {
     setIsDeleteModalOpen(true);
   };
 
-  // Status Filter Select
-  const handleStatusFilterChange = (status) => {
-    setSelectedStatus(status);
-    setCurrentPage(1); // Reset page on filter modify
+
+  // Carousel scroll listener for lazy loading next page
+  const handleCarouselScroll = (e) => {
+    const container = e.currentTarget;
+    const isNearEnd = container.scrollWidth - container.scrollLeft - container.clientWidth < 180;
+    
+    if (isNearEnd && !isLeadsLoading && pagination.page < pagination.totalPages) {
+      fetchLeads(pagination.page + 1, true);
+    }
+  };
+
+  const scrollCarousel = (direction) => {
+    if (carouselRef.current) {
+      const scrollAmount = direction === 'left' ? -380 : 380;
+      carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
   };
 
   // Keyboard Shortcut listener for Ctrl+K/Cmd+K to focus search input
@@ -385,8 +391,38 @@ const Dashboard = () => {
         </div>
       ) : (
         /* Grid Render */
-        <>
-          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:pb-0 -mx-3 px-3 sm:mx-0 sm:px-0">
+        <div className="relative group/carousel select-none">
+          
+          {/* Left Arrow Controller */}
+          <button
+            type="button"
+            onClick={() => scrollCarousel('left')}
+            className="hidden lg:flex absolute -left-5 top-[40%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 cursor-pointer"
+            title="Scroll Left"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Right Arrow Controller */}
+          <button
+            type="button"
+            onClick={() => scrollCarousel('right')}
+            className="hidden lg:flex absolute -right-5 top-[40%] -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 cursor-pointer"
+            title="Scroll Right"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Carousel Scroll Container */}
+          <div
+            ref={carouselRef}
+            onScroll={handleCarouselScroll}
+            className="flex overflow-x-auto gap-5 pb-5 scrollbar-none scroll-smooth w-full -mx-3 px-3 lg:mx-0 lg:px-0"
+          >
             {leads.map((lead) => (
               <LeadCard
                 key={lead._id}
@@ -395,34 +431,26 @@ const Dashboard = () => {
                 onDelete={openDeleteModal}
               />
             ))}
+
+            {/* Infinite Scroll / Lazy Load loader card */}
+            {isLeadsLoading && pagination.page > 1 && (
+              <div className="min-w-[280px] sm:min-w-[320px] flex-shrink-0 flex items-center justify-center bg-gray-100/10 dark:bg-[#0c111e]/30 border border-dashed border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6">
+                <div className="flex flex-col items-center gap-3">
+                  <svg className="animate-spin h-6 w-6 text-orange-500" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Loading...</span>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Pagination Controls */}
-          {pagination.totalPages > 1 && (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-gray-100 dark:border-gray-800 pt-6">
-              <span className="text-xs text-gray-500 dark:text-gray-400 text-center sm:text-left select-none">
-                Showing page <span className="font-semibold text-gray-800 dark:text-gray-200">{pagination.page}</span> of <span className="font-semibold text-gray-800 dark:text-gray-200">{pagination.totalPages}</span> ({pagination.total} leads)
-              </span>
-              
-              <div className="flex items-center gap-2 justify-center w-full sm:w-auto">
-                <button
-                  onClick={handlePrevPage}
-                  disabled={pagination.page <= 1}
-                  className="px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                >
-                  Previous
-                </button>
-                <button
-                  onClick={handleNextPage}
-                  disabled={pagination.page >= pagination.totalPages}
-                  className="px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          )}
-        </>
+          {/* Lazy Load metadata feedback indicator */}
+          <div className="mt-2 text-right text-[11px] font-bold text-gray-400 dark:text-gray-500 select-none">
+            Showing {leads.length} of {pagination.total} leads
+          </div>
+        </div>
       )}
 
       {/* Create / Edit Modal */}
