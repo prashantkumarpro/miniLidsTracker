@@ -386,7 +386,7 @@ const Dashboard = () => {
       ) : (
         /* Grid Render */
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:pb-0 -mx-3 px-3 sm:mx-0 sm:px-0">
             {leads.map((lead) => (
               <LeadCard
                 key={lead._id}
