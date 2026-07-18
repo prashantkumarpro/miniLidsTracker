@@ -99,7 +99,10 @@ const Dashboard = () => {
   // Initial and reactive fetch (resets page to 1 when search/filters/sorting/limit changes)
   useEffect(() => {
     if (isAuthenticated) {
-      fetchLeads(1);
+      const timer = setTimeout(() => {
+        fetchLeads(1);
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, selectedStatus, debouncedSearch, sortBy, sortOrder, limit, fetchLeads]);
 
@@ -286,7 +289,7 @@ const Dashboard = () => {
       <div className="bg-white/60 dark:bg-[#0c111e]/40 border border-gray-200/30 dark:border-gray-800/40 rounded-2xl p-6 backdrop-blur-md shadow-xs space-y-5">
         
         {/* Top Controls: Search Bar and Sorting */}
-        <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+        <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-end gap-4">
           
           {/* Search Box */}
           <div className="flex-1 max-w-md relative">
@@ -301,12 +304,12 @@ const Dashboard = () => {
               placeholder="Search by lead name or phone..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-16 py-2.5 border border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-550"
+              className="w-full pl-10 pr-16 py-2.5 border border-gray-200 dark:border-gray-800 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-555"
             />
             {searchQuery ? (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-450 hover:text-gray-650 dark:hover:text-gray-300 cursor-pointer"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-450 hover:text-gray-655 dark:hover:text-gray-300 cursor-pointer"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -314,7 +317,7 @@ const Dashboard = () => {
               </button>
             ) : (
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-[10px] font-bold text-gray-400 dark:text-gray-500 select-none">
+                <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 rounded border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-[10px] font-bold text-gray-400 dark:text-gray-555 select-none">
                   Ctrl K
                 </kbd>
               </div>
@@ -322,11 +325,10 @@ const Dashboard = () => {
           </div>
 
           {/* Sort and Page Size Selection */}
-          <div className="flex flex-wrap items-center gap-4">
-            
-            <div className="flex items-center gap-2.5">
-              <span className="text-xs font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider select-none">
-                Sort By:
+          <div className="grid grid-cols-2 gap-3 w-full lg:w-auto lg:min-w-[340px]">
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider select-none">
+                Sort By
               </span>
               <select
                 value={`${sortBy}-${sortOrder}`}
@@ -335,7 +337,7 @@ const Dashboard = () => {
                   setSortBy(field);
                   setSortOrder(order);
                 }}
-                className="px-3.5 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-sm font-semibold focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-700 dark:text-gray-300 cursor-pointer"
+                className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-700 dark:text-gray-305 cursor-pointer"
               >
                 <option value="createdAt-desc">Newest First</option>
                 <option value="createdAt-asc">Oldest First</option>
@@ -346,16 +348,16 @@ const Dashboard = () => {
               </select>
             </div>
 
-            <div className="flex items-center gap-2.5">
-              <span className="text-xs font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider select-none">
-                Show:
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-bold text-gray-455 dark:text-gray-500 uppercase tracking-wider select-none">
+                Show
               </span>
               <select
                 value={limit}
                 onChange={(e) => {
                   setLimit(parseInt(e.target.value, 10));
                 }}
-                className="px-3.5 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-sm font-semibold focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-700 dark:text-gray-300 cursor-pointer"
+                className="w-full px-3 py-2 border border-gray-200 dark:border-gray-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 transition-all bg-white dark:bg-gray-900/60 text-gray-700 dark:text-gray-305 cursor-pointer"
               >
                 <option value="10">10 per page</option>
                 <option value="25">25 per page</option>
@@ -363,13 +365,12 @@ const Dashboard = () => {
                 <option value="100">100 per page</option>
               </select>
             </div>
-
           </div>
         </div>
 
         {/* Bottom Controls: Filter Chips */}
-        <div>
-          <span className="block text-[10px] font-bold text-gray-400 dark:text-gray-550 uppercase tracking-wider mb-2.5 select-none">
+        <div className="pt-4 border-t border-gray-200/30 dark:border-gray-800/40">
+          <span className="block text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2.5 select-none">
             Filter Status Pipeline
           </span>
           <div className="flex flex-wrap gap-2">
