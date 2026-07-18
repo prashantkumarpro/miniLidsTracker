@@ -96,6 +96,20 @@ async function runTests() {
     const leadId = createLeadSuccess.data._id;
     console.log('✔ Test Create Lead Success passed');
 
+    // 5b. Create another Lead for Sorting
+    const createLead2Res = await fetch(`${baseUrl}/leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ name: 'Amit Patel', phone: '9876543211', status: 'Contacted' })
+    });
+    const createLead2 = await createLead2Res.json();
+    assert.strictEqual(createLead2Res.status, 201);
+    const lead2Id = createLead2.data._id;
+    console.log('✔ Test Create Second Lead passed');
+
     // 6. Test Get Leads List & Search/Filter
     const getLeadsRes = await fetch(`${baseUrl}/leads?q=rahul`, {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -105,8 +119,27 @@ async function runTests() {
     assert.strictEqual(getLeads.success, true);
     assert.strictEqual(getLeads.data.leads.length, 1);
     assert.strictEqual(getLeads.data.stats.New, 1);
-    assert.strictEqual(getLeads.data.stats.total, 1);
+    assert.strictEqual(getLeads.data.stats.Contacted, 1);
+    assert.strictEqual(getLeads.data.stats.total, 2);
     console.log('✔ Test Get Leads with Search passed');
+
+    // 6b. Test Sorting (Name A-Z)
+    const sortAZRes = await fetch(`${baseUrl}/leads?sortBy=name&sortOrder=asc`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const sortAZ = await sortAZRes.json();
+    assert.strictEqual(sortAZ.data.leads[0].name, 'Amit Patel');
+    assert.strictEqual(sortAZ.data.leads[1].name, 'Rahul Sharma');
+    console.log('✔ Test Sort Name (A-Z) passed');
+
+    // 6c. Test Sorting (Name Z-A)
+    const sortZARes = await fetch(`${baseUrl}/leads?sortBy=name&sortOrder=desc`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const sortZA = await sortZARes.json();
+    assert.strictEqual(sortZA.data.leads[0].name, 'Rahul Sharma');
+    assert.strictEqual(sortZA.data.leads[1].name, 'Amit Patel');
+    console.log('✔ Test Sort Name (Z-A) passed');
 
     // 7. Test Add Note (Success)
     const addNoteRes = await fetch(`${baseUrl}/leads/${leadId}/notes`, {
@@ -139,7 +172,7 @@ async function runTests() {
     assert.strictEqual(patchLead.data.status, 'Interested');
     console.log('✔ Test Patch Lead passed');
 
-    // 9. Test Delete Lead (Success)
+    // 9. Test Delete Lead 1 (Success)
     const deleteLeadRes = await fetch(`${baseUrl}/leads/${leadId}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
@@ -147,7 +180,16 @@ async function runTests() {
     const deleteLead = await deleteLeadRes.json();
     assert.strictEqual(deleteLeadRes.status, 200);
     assert.strictEqual(deleteLead.success, true);
-    console.log('✔ Test Delete Lead passed');
+
+    // 9b. Test Delete Lead 2 (Success)
+    const deleteLead2Res = await fetch(`${baseUrl}/leads/${lead2Id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const deleteLead2 = await deleteLead2Res.json();
+    assert.strictEqual(deleteLead2Res.status, 200);
+    assert.strictEqual(deleteLead2.success, true);
+    console.log('✔ Test Delete Both Leads passed');
 
     // 10. Verify empty state stats
     const getLeadsEmptyRes = await fetch(`${baseUrl}/leads`, {

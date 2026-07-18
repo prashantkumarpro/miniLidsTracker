@@ -25,7 +25,7 @@ const createLead = asyncHandler(async (req, res) => {
  * GET /api/v1/leads
  */
 const getLeads = asyncHandler(async (req, res) => {
-  const { q, status, page = 1, limit = 10 } = req.query;
+  const { q, status, page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
 
   // Construct query object
   const query = {};
@@ -48,9 +48,15 @@ const getLeads = asyncHandler(async (req, res) => {
   const limitNum = Math.max(1, parseInt(limit, 10));
   const skip = (pageNum - 1) * limitNum;
 
-  // Fetch leads (newest first)
+  // Determine sorting option
+  const allowedSortBy = ['createdAt', 'name', 'status'];
+  const activeSortBy = allowedSortBy.includes(sortBy) ? sortBy : 'createdAt';
+  const activeSortOrder = sortOrder === 'asc' ? 1 : -1;
+  const sortOption = { [activeSortBy]: activeSortOrder };
+
+  // Fetch leads
   const leads = await Lead.find(query)
-    .sort({ createdAt: -1 })
+    .sort(sortOption)
     .skip(skip)
     .limit(limitNum);
 

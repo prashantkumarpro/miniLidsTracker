@@ -1,43 +1,27 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 
 const StatsCards = ({ stats, isLeadsLoading }) => {
-  const carouselRef = useRef(null);
-
-  const scrollCarousel = (direction) => {
-    if (carouselRef.current) {
-      const scrollAmount = direction === 'left' ? -300 : 300;
-      carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
   if (isLeadsLoading && !stats) {
     return (
-      <div className="relative group/stats select-none">
-        {/* Left Arrow Placeholder */}
-        <div className="hidden sm:block absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-slate-900/40 border border-gray-800/30" />
-        {/* Right Arrow Placeholder */}
-        <div className="hidden sm:block absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-slate-900/40 border border-gray-800/30" />
-
-        <div className="flex overflow-x-auto gap-4 pb-3 scrollbar-none select-none w-full -mx-3 px-3 lg:mx-0 lg:px-0">
-          {[...Array(6)].map((_, index) => (
-            <div
-              key={index}
-              className="min-w-[155px] sm:min-w-[200px] lg:min-w-[220px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 lg:p-6 rounded-2xl shadow-xs flex flex-col justify-between h-[130px] relative overflow-hidden animate-pulse"
-            >
-              <div className="flex justify-between items-start">
-                <div className="w-16 h-3 bg-gray-200 dark:bg-gray-800 rounded" />
-                <div className="w-8 h-8 bg-gray-200 dark:bg-gray-800/50 rounded-lg" />
-              </div>
-              <div className="mt-4 space-y-2">
-                <div className="w-10 h-6 bg-gray-200 dark:bg-gray-800 rounded" />
-                <div className="w-20 h-2 bg-gray-200 dark:bg-gray-800/40 rounded" />
-                <div className="w-full h-1 bg-gray-250 dark:bg-gray-900 rounded-full mt-2" />
-              </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 select-none">
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            className="bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 lg:p-6 rounded-2xl shadow-xs flex flex-col justify-between h-[130px] relative overflow-hidden animate-pulse"
+          >
+            <div className="flex justify-between items-start">
+              <div className="w-16 h-3 bg-gray-200 dark:bg-gray-800 rounded" />
+              <div className="w-8 h-8 bg-gray-200 dark:bg-gray-800/50 rounded-lg" />
             </div>
-          ))}
-        </div>
+            <div className="mt-4 space-y-2">
+              <div className="w-10 h-6 bg-gray-200 dark:bg-gray-800 rounded" />
+              <div className="w-20 h-2 bg-gray-200 dark:bg-gray-800/40 rounded" />
+              <div className="w-full h-1 bg-gray-250 dark:bg-gray-900 rounded-full mt-2" />
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -147,90 +131,59 @@ const StatsCards = ({ stats, isLeadsLoading }) => {
   ];
 
   return (
-    <div className="relative group/stats select-none">
-      
-      {/* Left Arrow Controller */}
-      <button
-        type="button"
-        onClick={() => scrollCarousel('left')}
-        className="hidden sm:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/stats:opacity-100 transition-all duration-300 cursor-pointer"
-        title="Scroll Left"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 select-none">
+      {cards.map((card, index) => {
+        // Calculate ratio percentage relative to total leads
+        const percentage = currentStats.total > 0 ? Math.round((card.value / currentStats.total) * 100) : 0;
+        const isTotalCard = card.label === 'Total Leads';
 
-      {/* Right Arrow Controller */}
-      <button
-        type="button"
-        onClick={() => scrollCarousel('right')}
-        className="hidden sm:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-slate-900/90 border border-gray-800/80 text-white items-center justify-center shadow-lg hover:bg-orange-500 hover:border-orange-500 hover:scale-105 active:scale-95 opacity-0 group-hover/stats:opacity-100 transition-all duration-300 cursor-pointer"
-        title="Scroll Right"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+        return (
+          <div
+            key={index}
+            className={`bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 lg:p-6 rounded-2xl shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md ${card.glowColor} transition-all duration-300 flex flex-col justify-between relative overflow-hidden group`}
+          >
+            {/* Top Border Accent */}
+            <div className={`absolute top-0 left-0 w-full h-[2px] transition-all duration-300 opacity-20 group-hover:opacity-100 ${card.barColor}`} />
 
-      {/* Stats Scroll Container */}
-      <div
-        ref={carouselRef}
-        className="flex overflow-x-auto gap-4 pb-3 scrollbar-none select-none w-full -mx-3 px-3 lg:mx-0 lg:px-0 scroll-smooth"
-      >
-        {cards.map((card, index) => {
-          // Calculate ratio percentage relative to total leads
-          const percentage = currentStats.total > 0 ? Math.round((card.value / currentStats.total) * 100) : 0;
-          const isTotalCard = card.label === 'Total Leads';
-
-          return (
-            <div
-              key={index}
-              className={`min-w-[155px] sm:min-w-[200px] lg:min-w-[220px] flex-shrink-0 bg-white/70 dark:bg-[#0c111e]/60 border border-gray-200/30 dark:border-gray-800/40 p-4 sm:p-5 lg:p-6 rounded-2xl shadow-xs hover:border-gray-300 dark:hover:border-gray-700/60 hover:-translate-y-1 hover:shadow-md ${card.glowColor} transition-all duration-300 flex flex-col justify-between relative overflow-hidden group`}
-            >
-              {/* Top Border Accent */}
-              <div className={`absolute top-0 left-0 w-full h-[2px] transition-all duration-300 opacity-20 group-hover:opacity-100 ${card.barColor}`} />
-
-              <div className="flex justify-between items-start">
-                <span className="text-[10px] font-bold text-gray-400 dark:text-gray-550 uppercase tracking-wider">
-                  {card.label}
-                </span>
-                <div className={`p-1.5 rounded-lg ${card.badgeColor} ${card.darkBadgeColor} transition-transform duration-300 group-hover:scale-105`}>
-                  {card.icon}
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <div className="flex items-baseline gap-1.5">
-                  <span className={`text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight ${card.textColor}`}>
-                    {card.value}
-                  </span>
-                  {!isTotalCard && card.value > 0 && (
-                    <span className="text-[10px] font-bold text-gray-400 dark:text-gray-550">
-                      {percentage}%
-                    </span>
-                  )}
-                </div>
-
-                {/* Subtext description */}
-                <span className="block text-[10px] font-medium text-gray-400 dark:text-gray-550 mt-1 select-none leading-tight">
-                  {card.subtext}
-                </span>
-
-                {/* Metric Ratio Bar */}
-                {!isTotalCard && (
-                  <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mt-3 select-none">
-                    <div 
-                      className={`h-full ${card.barColor} rounded-full transition-all duration-500 ease-out`}
-                      style={{ width: `${percentage}%` }}
-                    />
-                  </div>
-                )}
+            <div className="flex justify-between items-start">
+              <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                {card.label}
+              </span>
+              <div className={`p-1.5 rounded-lg ${card.badgeColor} ${card.darkBadgeColor} transition-transform duration-300 group-hover:scale-105`}>
+                {card.icon}
               </div>
             </div>
-          );
-        })}
-      </div>
+
+            <div className="mt-4">
+              <div className="flex items-baseline gap-1.5">
+                <span className={`text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight ${card.textColor}`}>
+                  {card.value}
+                </span>
+                {!isTotalCard && card.value > 0 && (
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500">
+                    {percentage}%
+                  </span>
+                )}
+              </div>
+
+              {/* Subtext description */}
+              <span className="block text-[10px] font-medium text-gray-400 dark:text-gray-550 mt-1 select-none leading-tight">
+                {card.subtext}
+              </span>
+
+              {/* Metric Ratio Bar */}
+              {!isTotalCard && (
+                <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mt-3 select-none">
+                  <div 
+                    className={`h-full ${card.barColor} rounded-full transition-all duration-500 ease-out`}
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
