@@ -9,6 +9,14 @@ const asyncHandler = require('../utils/asyncHandler');
 const createLead = asyncHandler(async (req, res) => {
   const { name, phone, status } = req.body;
 
+  // Check if a lead with the same phone already exists
+  const existingLead = await Lead.findOne({ phone });
+  if (existingLead) {
+    return ApiResponse.error(res, 'Validation failed', [
+      { field: 'phone', message: 'A lead with this phone number already exists' }
+    ], 400);
+  }
+
   const newLead = new Lead({
     name,
     phone,
@@ -127,6 +135,16 @@ const updateLead = asyncHandler(async (req, res) => {
   const lead = await Lead.findById(id);
   if (!lead) {
     return ApiResponse.error(res, 'Lead not found', [], 404);
+  }
+
+  // Check if a different lead already uses the new phone number
+  if (phone !== undefined && phone !== lead.phone) {
+    const existingLead = await Lead.findOne({ phone, _id: { $ne: id } });
+    if (existingLead) {
+      return ApiResponse.error(res, 'Validation failed', [
+        { field: 'phone', message: 'A lead with this phone number already exists' }
+      ], 400);
+    }
   }
 
   // Update fields if provided

@@ -50,7 +50,7 @@ const leadSchema = new mongoose.Schema(
 
 // Indexes for faster search and filtering
 leadSchema.index({ name: 'text' }); // Text index or prefix index. Let's do simple indexes.
-leadSchema.index({ phone: 1 });
+leadSchema.index({ phone: 1 }, { unique: true });
 leadSchema.index({ status: 1 });
 leadSchema.index({ createdAt: -1 });
 

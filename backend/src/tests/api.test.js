@@ -110,6 +110,24 @@ async function runTests() {
     const lead2Id = createLead2.data._id;
     console.log('✔ Test Create Second Lead passed');
 
+    // 5c. Test Create Lead (Duplicate Phone - Failure)
+    const createLeadDupRes = await fetch(`${baseUrl}/leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ name: 'Rahul Duplicate', phone: '9876543210', status: 'New' })
+    });
+    const createLeadDup = await createLeadDupRes.json();
+    assert.strictEqual(createLeadDupRes.status, 400);
+    assert.strictEqual(createLeadDup.success, false);
+    assert.strictEqual(createLeadDup.message, 'Validation failed');
+    assert.ok(Array.isArray(createLeadDup.errors));
+    assert.strictEqual(createLeadDup.errors[0].field, 'phone');
+    assert.strictEqual(createLeadDup.errors[0].message, 'A lead with this phone number already exists');
+    console.log('✔ Test Create Lead (Duplicate Phone) Failure passed');
+
     // 6. Test Get Leads List & Search/Filter
     const getLeadsRes = await fetch(`${baseUrl}/leads?q=rahul`, {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -171,6 +189,22 @@ async function runTests() {
     assert.strictEqual(patchLead.success, true);
     assert.strictEqual(patchLead.data.status, 'Interested');
     console.log('✔ Test Patch Lead passed');
+
+    // 8b. Test Patch Lead (Duplicate Phone - Failure)
+    const patchLeadDupRes = await fetch(`${baseUrl}/leads/${leadId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ phone: '9876543211' })
+    });
+    const patchLeadDup = await patchLeadDupRes.json();
+    assert.strictEqual(patchLeadDupRes.status, 400);
+    assert.strictEqual(patchLeadDup.success, false);
+    assert.strictEqual(patchLeadDup.errors[0].field, 'phone');
+    assert.strictEqual(patchLeadDup.errors[0].message, 'A lead with this phone number already exists');
+    console.log('✔ Test Patch Lead (Duplicate Phone) Failure passed');
 
     // 9. Test Delete Lead 1 (Success)
     const deleteLeadRes = await fetch(`${baseUrl}/leads/${leadId}`, {
